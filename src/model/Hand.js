@@ -39,6 +39,13 @@ class Hand {
     }
     
     /**
+     * Remove all cards from the hand
+     */
+    clear() {
+        this.#cards.length = 0;
+    }
+
+    /**
      * Sort the cards in the hand in descending order
      */
     sort() {
@@ -55,6 +62,14 @@ class Hand {
             
             return oneComesFirst ? -1 : 1;
         });
+    }
+
+    /**
+     * Whether or not the hand is a misdeal
+     */
+    isMisdeal() {
+        return this.#cards.length === this.#maxCards &&
+            this.#cards.reduce((acc, cur) => (acc && !cur.isTrump() && cur.getValue() === 0), true);
     }
 
     /**

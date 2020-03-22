@@ -1,17 +1,22 @@
-const strategies = Object.values(require('./strategies'));
-
 class Bot {
 
     #hand;
     #cards;
     #order;
+    #strategy;
 
-    constructor(name) {
+    /**
+     * Create a new bot
+     * @param {string} name the name of the bot
+     * @param {Function} strategy a strategy for the bot to use
+     */
+    constructor(name, strategy) {
         this.name = name;
+        this.#strategy = strategy;
     }
 
     /**
-     * Receive a dealt hand
+     * Receive a dealt hand, returns whether the bot accepted the hand
      * @param {string} name the name of the bot
      * @param {Hand} hand the hand object that was dealt
      * @param {int} order the order where this player is in terms of picking
@@ -20,6 +25,8 @@ class Bot {
         this.#hand = hand;
         this.#cards = hand.getCards();
         this.#order = order;
+
+        return !hand.isMisdeal();
     }
 
     /**
@@ -29,7 +36,7 @@ class Bot {
         console.log(`Bot ${this.name} is evaluating...`);
         console.log(`Received hand ${this.#hand.toString()}`);
         
-        const willPick = strategies[Math.floor(Math.random() * 2) + 1](this.#cards, this.#order).pick();
+        const willPick = this.#strategy(this.#cards, this.#order).pick();
 
         if (willPick) {
             console.log(`Bot ${this.name} wants to pick\n`);
@@ -40,11 +47,14 @@ class Bot {
         return willPick;
     }
 
+    /**
+     * Ask the bot if it wants to crack
+     */
     wantsToCrack() {
         console.log(`Bot ${this.name} is evaluating...`);
         console.log(`Received hand ${this.#hand.toString()}`);
         
-        const willCrack = strategies[Math.floor(Math.random() * 2) + 1](this.#cards, this.#order).crack();
+        const willCrack = this.#strategy(this.#cards, this.#order).crack();
 
         if (willCrack) {
             console.log(`Bot ${this.name} wants to crack\n`);

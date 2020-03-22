@@ -1,31 +1,40 @@
 const Bot = require('./player/Bot');
 const Deck = require('./model/Deck');
+const strategies = Object.values(require('./player/strategies'));
+
+const bots = ['A', 'B', 'C', 'D', 'E'].map(name => {
+    const strategy = strategies[Math.floor(Math.random() * 3)];
+    return new Bot(name, strategy);
+});
 
 const deck = new Deck();
 const { hands, blind } = deck.deal(5);
+let validDeal = true;
 
-const bots = ['A', 'B', 'C', 'D', 'E'].map(name => (new Bot(name)));
+for (let h = 0; h < hands.length; h++) {
+    validDeal &= bots[h].take(hands[h], h);
+}
 
-hands.forEach((hand, i) => {
-    bots[i].take(hand, i);
-});
+if (validDeal) {
+    let i;
+    let someonePicked = false;
 
-let i;
-let picked = false;
-
-for (i = 0; i < bots.length; i++) {
-    picked = bots[i].wantsToPick();
-    if (picked) {
-        break;
+    for (i = 0; i < bots.length; i++) {
+        someonePicked = bots[i].wantsToPick();
+        if (someonePicked) {
+            break;
+        }
     }
-}
 
-for (i = i + 1; i < bots.length; i++) {
-    bots[i].wantsToCrack();
-}
+    for (i = i + 1; i < bots.length; i++) {
+        bots[i].wantsToCrack();
+    }
 
-if (!picked) {
-    console.log(`It's a doubler!`);
+    if (!someonePicked) {
+        console.log(`It's a doubler!`);
+    }
+} else {
+    console.log(`It's a misdeal!`);
 }
 
 console.log(`The blind was ${blind.toString()}`);

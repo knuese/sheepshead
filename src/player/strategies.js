@@ -18,6 +18,10 @@ const suitFactors = {
     [suits.diamond.id]: 0.1
 }
 
+/**
+ * Get relevant data from the cards in the hand
+ * @param {[Card]} cards the array of cards
+ */
 const getMetrics = (cards) => {
     const trump = cards.filter(c => c.isTrump());
 
@@ -28,24 +32,34 @@ const getMetrics = (cards) => {
     };
 }
 
+/**
+ * An aggressive strategy
+ * @param {[Card]} cards the cards in the hand
+ * @param {Number} order the order that the bot is in playing
+ */
 const aggressive = (cards, order) => ({
     pick: () => {
         const { numTrump, numPoints, power } = getMetrics(cards);
         const confidence = power + (order / 5) + ((numTrump - 2.5) / 2) + (numPoints / 10);
         console.log(`Confidence level of ${confidence} for aggressive strategy`);
-        return confidence >= 7.5;
+        return confidence >= 7.75;
     },
     crack: () => {
-        const { numTrump, numPoints, power } = getMetrics(cards);
+        const { numTrump, power } = getMetrics(cards);
         const confidence = power + (order / 5) + ((numTrump - 2.5) / 2);
         console.log(`Confidence level of ${confidence} for aggressive strategy`);
         return confidence >= 8.25;
     }
-})
+});
 
+/**
+ * A normal strategy
+ * @param {[Card]} cards the cards in the hand
+ * @param {Number} order the order that the bot is in playing
+ */
 const normal = (cards, order) => ({
     pick: () => {
-        const { numTrump, power } = getMetrics(cards);
+        const { numTrump, numPoints, power } = getMetrics(cards);
         const confidence = power + (order / 5) + ((numTrump - 2.5) / 2) + (numPoints / 10);
         console.log(`Confidence level of ${confidence} for normal strategy`);
         return confidence >= 8.5;
@@ -56,8 +70,13 @@ const normal = (cards, order) => ({
         console.log(`Confidence level of ${confidence} for normal strategy`);
         return confidence >= 9.75;
     }
-})
+});
 
+/**
+ * A safe strategy
+ * @param {[Card]} cards the cards in the hand
+ * @param {Number} order the order that the bot is in playing
+ */
 const safe = (cards, order) => ({
     pick: () => {
         const { numTrump, numPoints, power } = getMetrics(cards);
@@ -71,7 +90,7 @@ const safe = (cards, order) => ({
         console.log(`Confidence level of ${confidence} for safe strategy`);
         return confidence >= 11.5;
     }
-})
+});
 
 module.exports = {
     normal,

@@ -1,12 +1,16 @@
-const Hand = require('./Hand');
+const Cards = require('./Cards');
 
-class Blind extends Hand {
+class Blind extends Cards {
     /**
-     * Create a new blind
-     * @param {Number} numPlayers the number of players in the game
+     * Add cards to the blind
+     * @param {[Card]} cards an array of cards to add 
      */
-    constructor(numPlayers) {
-        super(32 % numPlayers);
+    add(cards) {
+        if (this.getCards() + cards.length > 2) {
+            throw new Error(`Blind cannot have more than 2 cards!`);
+        }
+
+        super.add(cards);
     }
 }
 

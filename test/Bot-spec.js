@@ -18,7 +18,7 @@ describe('Bot plays correctly', () => {
                             .concat(deck.getCards({ rank: ranks.jack, suit: suits.club }))
                             .concat(deck.getCards({ rank: ranks.jack, suit: suits.spade }));
         const hand = new Hand(5);
-        hand.addCards(cards);
+        hand.add(cards);
 
         for (let i = 0; i < 3; i++) {
             for (let j = 0; j < 5; j++) {
@@ -39,7 +39,7 @@ describe('Bot plays correctly', () => {
                             .concat(deck.getCards({ rank: ranks.ace, suit: suits.club }))
                             .concat(deck.getCards({ rank: ranks.ten, suit: suits.spade }));
         const hand = new Hand(5);
-        hand.addCards(cards);
+        hand.add(cards);
 
         for (let i = 0; i < 3; i++) {
             for (let j = 0; j < 5; j++) {

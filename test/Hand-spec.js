@@ -5,18 +5,18 @@ const Hand = require('../src/model/Hand');
 const { ranks, suits } = require('../src/util/data');
 
 describe('Correctly manages a hand', () => {
-    let hand;
+    const hand = new Hand(5);
 
     beforeEach(() => {
-        hand = new Hand(5);
+        hand.clear();
     });
 
     it('cannot have more than 6 cards in a hand', () => {
-        expect(() => hand.addCards([...Array(7).keys()].map(_ => new Card(ranks.queen, suits.diamond)))).to.throw(`Hand length cannot be greater than 6 for 5 players!`);
+        expect(() => hand.add([...Array(7).keys()].map(_ => new Card(ranks.queen, suits.diamond)))).to.throw(`Hand length cannot be greater than 6 for 5 players!`);
     });
 
     it('can be converted to a string', () => {
-        hand.addCards([
+        hand.add([
             new Card(ranks.queen, suits.club),
             new Card(ranks.queen, suits.spade),
             new Card(ranks.ace, suits.diamond),
@@ -28,7 +28,7 @@ describe('Correctly manages a hand', () => {
     });
 
     it('can be cleared', () => {
-        hand.addCards([
+        hand.add([
             new Card(ranks.queen, suits.club),
             new Card(ranks.queen, suits.spade),
             new Card(ranks.ace, suits.diamond),
@@ -42,7 +42,7 @@ describe('Correctly manages a hand', () => {
     });
 
     it('isMisdeal() returns true when the hand is a misdeal', () => {
-        hand.addCards([
+        hand.add([
             new Card(ranks.seven, suits.club),
             new Card(ranks.seven, suits.spade),
             new Card(ranks.seven, suits.heart),
@@ -55,7 +55,7 @@ describe('Correctly manages a hand', () => {
     });
 
     it('isMisdeal() returns false when the hand has trump or points', () => {
-        hand.addCards([
+        hand.add([
             new Card(ranks.seven, suits.club),
             new Card(ranks.seven, suits.spade),
             new Card(ranks.seven, suits.diamond),
@@ -67,7 +67,7 @@ describe('Correctly manages a hand', () => {
         expect(hand.isMisdeal(), 'The hand has trump').to.be.false;
 
         hand.clear();
-        hand.addCards([
+        hand.add([
             new Card(ranks.seven, suits.club),
             new Card(ranks.seven, suits.spade),
             new Card(ranks.seven, suits.heart),

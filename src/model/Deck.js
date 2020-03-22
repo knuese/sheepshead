@@ -7,6 +7,9 @@ class Deck {
 
     #cards;
 
+    /**
+     * Create a new deck; the cards are added automatically
+     */
     constructor() {
         this.#cards = Object.values(suits).reduce((acc, suit) => {
             Object.values(ranks).forEach(rank => acc.push(new Card(rank, suit)));
@@ -51,7 +54,7 @@ class Deck {
             throw new Error('Only five-handed games are supported!');
         }
 
-        const cards = this.getCards();
+        let cards = this.getCards();
 
         // Shuffle the cards
         for (let i = cards.length - 1; i > 0; i--) {
@@ -59,16 +62,19 @@ class Deck {
             [cards[i], cards[j]] = [cards[j], cards[i]];
         }
 
+        // Don't forget to cut
+        const cutIndex = Math.floor(Math.random() * 30 + 1);
+        cards = cards.slice(cutIndex).concat(cards.slice(0, cutIndex));
+
         const hands = [...Array(numHands).keys()].map(_ => new Hand(numHands));
 
-        let blindSize = 32 % numHands;
-        let blind = new Blind(numHands);
-        const blindIndex = Math.floor(Math.random() * 13 + 1) * blindSize;
-        blind.addCards(cards.splice(blindIndex, blindSize));
+        let blind = new Blind();
+        const blindIndex = Math.floor(Math.random() * 13 + 1) * 2;
+        blind.add(cards.splice(blindIndex, 2));
 
         // Deal the cards to each hand
         for (let i = 0; i < cards.length; i += 2) {
-            hands[(i / 2) % numHands].addCards(cards.slice(i, i + 2));
+            hands[(i / 2) % numHands].add(cards.slice(i, i + 2));
         }
 
         return { hands, blind };

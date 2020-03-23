@@ -7,9 +7,10 @@ class Trick extends Cards {
     /**
      * Create a new trick
      * @param {Number} numPlayers the number of players in the game
+     * @param {[Card]} cards an array of cards to initialize the trick
      */
-    constructor(numPlayers) {
-        super();
+    constructor(numPlayers, cards = []) {
+        super(cards);
         this.#numPlayers = numPlayers;
     }
 

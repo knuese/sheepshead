@@ -1,5 +1,6 @@
 const expect = require('chai').expect;
 
+const Card = require('../src/model/Card');
 const Deck = require('../src/model/Deck');
 const { ranks, suits } = require('../src/util/data');
 
@@ -36,16 +37,6 @@ describe('Validate Deck operations', () => {
         });
     });
 
-    it('can get a specific card', () => {
-        const cards = deck.getCards({ rank: ranks.queen, suit: suits.club });
-        expect(cards.length).to.equal(1, `Should only have one queen of clubs`);
-    });
-
-    it('throws an error if no cards are found', () => {
-        const criterion = { rank: 'foo' };
-        expect(() => deck.getCards(criterion)).to.throw(`No cards found for criterion ${JSON.stringify(criterion)}`);
-    });
-
     it('can be dealt to five players', () => {
         let { hands, blind } = deck.deal(5);
         expect(hands.length).to.equal(5, `Should have 5 hands`);
@@ -55,5 +46,19 @@ describe('Validate Deck operations', () => {
 
     it('throws an error for a number of players other than 5', () => {
         expect(() => deck.deal(4)).to.throw('Only five-handed games are supported!');
+    });
+
+    it('does nothing for operations that do not pertain to a deck', () => {
+        deck.add(new Card(ranks.queen, suits.heart));
+        let cards = deck.getCards();
+        expect(cards.length).to.equal(32, 'Should not be able to add a card to the deck');
+
+        deck.select(ranks.queen, suits.heart);
+        cards = deck.getCards();
+        expect(cards.length).to.equal(32, 'Should not be able to remove a card from the deck by calling select()');
+
+        deck.clear();
+        cards = deck.getCards();
+        expect(cards.length).to.equal(32, 'Should not be able to clear the deck');
     });
 });

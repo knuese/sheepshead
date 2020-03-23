@@ -5,9 +5,10 @@ class Cards {
 
     /**
      * Create a collection of cards
+     * @param {[Card]} cards an optional array of cards to initialize the collection
      */
-    constructor() {
-        this.#cards = [];
+    constructor(cards = []) {
+        this.#cards = cards;
     }
 
     /**
@@ -20,10 +21,42 @@ class Cards {
     }
 
     /**
-     * Get the cards in the collection
+     * Remove a card from the collection and return it
+     * @param {Object} rank the rank of the card 
+     * @param {Object} suit the suit of the card
      */
-    getCards() {
-        return this.#cards.slice();
+    select(rank, suit) {
+        const index = this.#cards.findIndex(c => c.getRank() === rank && c.getSuit() === suit);
+
+        if (index < 0) {
+            throw new Error(`${rank.id}${suit.id} is not in the hand!`);
+        }
+
+        return this.#cards.splice(index, 1)[0];
+    }
+
+    /**
+     * Get specific cards from the deck
+     * @param options search options that can include rank, suit, and if the card is trump
+     */
+    getCards(options = {}) {
+        let cards = this.#cards.slice();
+
+        if (options.rank) {
+            cards = cards.filter(c => c.getRank() === options.rank);
+        }
+
+        if (options.suit) {
+            cards = cards.filter(c => c.getSuit() === options.suit);
+        }
+
+        if (options.isTrump === true) {
+            cards = cards.filter(c => c.isTrump());
+        } else if (options.isTrump === false) {
+            cards = cards.filter(c => !c.isTrump());
+        }
+
+        return cards;
     }
 
     /**

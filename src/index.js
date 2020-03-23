@@ -26,11 +26,16 @@ if (validDeal) {
         }
     }
 
-    for (i = i + 1; i < bots.length; i++) {
-        bots[i].wantsToCrack();
-    }
+    if (someonePicked) {
+        const { bury, calledSuit } = bots[i].pick(blind);
+        console.log(`${bury.map(c => c.getId())} was buried`);
+        console.log(`${calledSuit.id} is the called suit\n`);
 
-    if (!someonePicked) {
+        for (i = i + 1; i < bots.length; i++) {
+            bots[i].wantsToCrack();
+        }
+    }
+    else {
         console.log(`It's a doubler!`);
     }
 } else {

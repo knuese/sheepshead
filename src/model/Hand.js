@@ -7,9 +7,10 @@ class Hand extends Cards {
     /**
      * Create a new hand
      * @param {Number} numPlayers the number of players in the game
+     * @param {[Card]} cards an array of cards to initialize the hand
      */
-    constructor(numPlayers) {
-        super();
+    constructor(numPlayers, cards = []) {
+        super(cards);
         this.#numPlayers = numPlayers;
         this.#maxCards = Math.floor(32 / numPlayers);
     }
@@ -30,9 +31,8 @@ class Hand extends Cards {
      * Whether or not the hand is a misdeal
      */
     isMisdeal() {
-        const cards = this.getCards();
-        return cards.length === this.#maxCards &&
-            cards.reduce((acc, cur) => (acc && !cur.isTrump() && cur.getValue() === 0), true);
+        // Check if the hand has 6 fail worth no points
+        return this.getCards({ isTrump: false }).filter(c => c.getValue() === 0).length === this.#maxCards;
     }
 }
 

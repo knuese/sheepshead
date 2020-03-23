@@ -1,48 +1,19 @@
 const Blind = require('./Blind');
+const Cards = require('./Cards');
 const Card = require('./Card');
 const Hand = require('./Hand');
 const { ranks, suits } = require('../util/data');
 
-class Deck {
-
-    #cards;
-
+class Deck extends Cards {
     /**
      * Create a new deck; the cards are added automatically
      */
     constructor() {
-        this.#cards = Object.values(suits).reduce((acc, suit) => {
+        super();
+        super.add(Object.values(suits).reduce((acc, suit) => {
             Object.values(ranks).forEach(rank => acc.push(new Card(rank, suit)));
             return acc;
-        }, []);
-    }
-
-    /**
-     * Get specific cards from the deck
-     * @param criterion search criterion that can include rank, suit, and if the card is trump
-     */
-    getCards(criterion = {}) {
-        let cards = this.#cards.slice();
-
-        if (criterion.rank) {
-            cards = cards.filter(c => c.getRank() === criterion.rank);
-        }
-
-        if (criterion.suit) {
-            cards = cards.filter(c => c.getSuit() === criterion.suit);
-        }
-
-        if (criterion.isTrump === true) {
-            cards = cards.filter(c => c.isTrump());
-        } else if (criterion.isTrump === false) {
-            cards = cards.filter(c => !c.isTrump());
-        }
-
-        if (cards.length === 0) {
-            throw new Error(`No cards found for criterion ${JSON.stringify(criterion)}`);
-        }
-
-        return cards;
+        }, []));
     }
 
     /**
@@ -79,6 +50,21 @@ class Deck {
 
         return { hands, blind };
     }
+
+    /**
+     * Does nothing
+     */
+    add() { }
+
+    /**
+     * Does nothing
+     */
+    select() { }
+
+    /**
+     * Does nothing
+     */
+    clear() { }
 }
 
 module.exports = Deck;

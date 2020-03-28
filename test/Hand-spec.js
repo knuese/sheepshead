@@ -1,8 +1,8 @@
 const expect = require('chai').expect;
 
-const Card = require('../src/model/Card');
-const Hand = require('../src/model/Hand');
-const { ranks, suits } = require('../src/util/data');
+const Card = require('../src/model/game/Card');
+const Hand = require('../src/model/game/Hand');
+const { ranks, suits } = require('../src/model/util/data');
 
 describe('Correctly manages a hand', () => {
     const hand = new Hand(5);

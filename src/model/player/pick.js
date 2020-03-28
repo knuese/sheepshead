@@ -1,4 +1,4 @@
-const Cards = require('../model/Cards');
+const Cards = require('../game/Cards');
 const { ranks, suits } = require('../util/data');
 
 /**
@@ -38,8 +38,10 @@ const shouldGoAlone = (cards) => {
  * @param {Cards} cards the collection of cards 
  */
 const callSuit = (cards) => {
+    const failSuits = [suits.club, suits.spade, suits.heart];
+
     let calledSuit;
-    let suitsToCall = [suits.club, suits.spade, suits.heart].reduce((acc, suit) => {
+    let suitsToCall = failSuits.reduce((acc, suit) => {
         const fail = cards.getCards({ suit, isTrump: false });
         if (fail.length > 0 && !fail.find(c => c.getRank() === ranks.ace)) {
             acc.push({suit, pts: fail.reduce((acc, cur) => (acc + cur.getValue()), 0), count: fail.length});
@@ -48,7 +50,13 @@ const callSuit = (cards) => {
     }, []);
 
     if (suitsToCall.length === 0) {
-        throw new Error('Need to call an under!');
+        const callableSuits = failSuits.filter(suit => cards.getCards({ suit, rank: ranks.ace }.length === 0));
+
+        if (callableSuits.length === 0) {
+            calledSuit = failSuits.slice().sort((a, b) => (cards.getCards({ suit: a, isTrump: false }).length - cards.getCards({ suit: b, isTrump: false }).length)).pop();
+        } else {
+            calledSuit = callableSuits[Math.floor(Math.random() * callableSuits.length)];
+        }
     } else {
         if (suitsToCall.length > 1) {
             suitsToCall = suitsToCall.sort((a, b) => {

@@ -1,10 +1,10 @@
 const expect = require('chai').expect;
 
-const Card = require('../src/model/Card');
-const Cards = require('../src/model/Cards');
+const Card = require('../src/model/game/Card');
+const Cards = require('../src/model/game/Cards');
 const { checkCards } = require('./util');
-const { ranks, suits } = require('../src/util/data');
-const { shouldGoAlone, callSuit, buryCards, pick } = require('../src/player/pick');
+const { ranks, suits } = require('../src/model/util/data');
+const { shouldGoAlone, callSuit, buryCards, pick } = require('../src/model/player/pick');
 
 describe('Determine when the player should go alone', () => {
     it('goes alone with a granny hand', () => {

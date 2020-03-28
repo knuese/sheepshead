@@ -7,6 +7,7 @@ class Card {
     #value;
     #isTrump;
     #power;
+    #imgName;
 
     /**
      * Create a new card
@@ -22,6 +23,7 @@ class Card {
             rank.id === ranks.queen.id || 
             suit.id === suits.diamond.id;
         this.#power = { suit: suit.power, rank: rank.power };
+        this.#imgName = `${rank.id}${suit.txt}`;
     }
 
     /**
@@ -64,6 +66,13 @@ class Card {
      */
     getId() {
         return this.#id;
+    }
+
+    /**
+     * Gets the name of the image file for the card
+     */
+    getImgName() {
+        return this.#imgName;
     }
 
     /**

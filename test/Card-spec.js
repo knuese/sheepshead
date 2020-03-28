@@ -1,8 +1,8 @@
 const expect = require('chai').expect;
 
-const Card = require('../src/model/Card');
-const Deck = require('../src/model/Deck');
-const { ranks, suits } = require('../src/util/data'); 
+const Card = require('../src/model/game/Card');
+const Deck = require('../src/model/game/Deck');
+const { ranks, suits } = require('../src/model/util/data'); 
 
 describe('Correctly determines which card wins', () => {
     let deck;
@@ -97,5 +97,10 @@ describe('Correctly determines which card wins', () => {
     it('throws an error when trying to compare a card against itself', () => {
         const card = deck.getCards({ rank: ranks.queen, suit: suits.heart })[0];
         expect(() => Card.oneBeatsTwo(card, card)).to.throw(`Cannot compare ${card.getId()} to itself!`)
+    });
+
+    it('maps a card to the proper image name', () => {
+        const card = new Card(ranks.eight, suits.spade);
+        expect(card.getImgName()).to.equal('8S');
     });
 });

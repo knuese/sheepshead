@@ -1,8 +1,8 @@
 const expect = require('chai').expect;
 
-const Blind = require('../src/model/Blind');
-const Card = require('../src/model/Card');
-const { ranks, suits } = require('../src/util/data');
+const Blind = require('../src/model/game/Blind');
+const Card = require('../src/model/game/Card');
+const { ranks, suits } = require('../src/model/util/data');
 
 describe('Validate Blind operations', () => {
     it('throws an error when trying to put more than 2 cards in the blind', () => {

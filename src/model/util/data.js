@@ -10,9 +10,9 @@ module.exports = {
         queen: { id: 'Q', pts: 3, power: 8 }
     }),
     suits: Object.freeze({
-        diamond: { id: '♦', power: 1 },
-        heart: { id: '♥', power: 2 },
-        spade: { id: '♠', power: 3 },
-        club: { id: '♣', power: 4 },
+        diamond: { id: '♦', txt: 'D', power: 1 },
+        heart: { id: '♥', txt: 'H', power: 2 },
+        spade: { id: '♠', txt: 'S', power: 3 },
+        club: { id: '♣', txt: 'C', power: 4 }
     })
 }

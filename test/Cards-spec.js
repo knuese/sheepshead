@@ -1,8 +1,8 @@
 const expect = require('chai').expect;
 
-const Card = require('../src/model/Card');
-const Cards = require('../src/model/Cards');
-const { ranks, suits } = require('../src/util/data');
+const Card = require('../src/model/game/Card');
+const Cards = require('../src/model/game/Cards');
+const { ranks, suits } = require('../src/model/util/data');
 
 describe('Validate Cards operations', () => {
     let cards;

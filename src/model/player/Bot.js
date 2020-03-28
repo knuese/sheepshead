@@ -1,4 +1,4 @@
-const Cards = require('../model/Cards');
+const Cards = require('../game/Cards');
 const { ranks, suits } = require('../util/data');
 const { pick } = require('./pick');
 

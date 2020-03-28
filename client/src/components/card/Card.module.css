@@ -1,0 +1,39 @@
+.Card {
+    display: inline-block;
+    transition: transform .2s;
+    max-width: 8vw;
+    height: auto;
+}
+
+.Card:hover {
+    transform: scale(1.5);
+}
+
+img {
+    width: 100%;
+    height: 100%;
+}
+
+/* Mobile phones portrait */
+@media screen and (max-device-width: 480px) and (orientation: portrait) {
+    .Card {
+        width: 15%;
+        margin: 2px
+    }
+}
+
+/* Mobile phones landscape */
+@media screen and (max-device-width: 670px) and (orientation: landscape) {
+    .Card {
+        width: 11%;
+        margin: 4px;
+    }
+}
+
+/* Desktops */
+@media screen and (min-width: 670px) {
+    .Card {
+        width: 10%;
+        margin: 8px;
+    }
+}

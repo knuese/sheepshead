@@ -1,5 +1,5 @@
 const Bot = require('./player/Bot');
-const Deck = require('./model/Deck');
+const Deck = require('./model/game/Deck');
 const strategies = Object.values(require('./player/strategies'));
 
 const bots = ['A', 'B', 'C', 'D', 'E'].map(name => {

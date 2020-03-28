@@ -1,13 +1,13 @@
 const expect = require('chai').expect;
 
-const Blind = require('../src/model/Blind');
-const Bot = require('../src/player/Bot');
-const Card = require('../src/model/Card');
+const Blind = require('../src/model/game/Blind');
+const Bot = require('../src/model/player/Bot');
+const Card = require('../src/model/game/Card');
 const { checkCards } = require('./util');
-const Deck = require('../src/model/Deck');
-const Hand = require('../src/model/Hand');
-const { ranks, suits } = require('../src/util/data');
-const strategies = require('../src/player/strategies');
+const Deck = require('../src/model/game/Deck');
+const Hand = require('../src/model/game/Hand');
+const { ranks, suits } = require('../src/model/util/data');
+const strategies = require('../src/model/player/strategies');
 const strategyArray = Object.values(strategies);
 
 describe('Bot plays correctly', () => {

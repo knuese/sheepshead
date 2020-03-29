@@ -1,7 +1,6 @@
 .Card {
     display: inline-block;
     transition: transform .2s;
-    max-width: 8vw;
     height: auto;
 }
 
@@ -34,6 +33,7 @@ img {
 @media screen and (min-width: 670px) {
     .Card {
         width: 10%;
+        max-width: 8vw;
         margin: 8px;
     }
 }

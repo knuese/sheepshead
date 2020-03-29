@@ -5,7 +5,7 @@ import styles from './Spinner.module.css';
 const Spinner = (props) => {
     return (
         <div className={styles.Spinner}>
-            {[...Array(5)].map((_, i) => (<div key={i}/>))}
+            {[...Array(30 / props.numHands)].map(_ => (<div/>))}
         </div>
     );
 }
